@@ -26,7 +26,7 @@ parameters:
   - name: targetCDConfiguration
     type: string
     displayName: Target CD Configuration
-    default: CD
+    defaultValue: CD
 multibranch:
   branchSource:
     github:
