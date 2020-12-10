@@ -1,6 +1,6 @@
 version: 1
 type: pipeline-template
-name: "UC-2 Vue.js App Multibranch Pipeline"
+name: UC2 Vue.js App Multibranch Pipeline
 templateType: MULTIBRANCH
 description: Build, Test and Push Image for Standard Vue.js Applications. 
 parameters:
