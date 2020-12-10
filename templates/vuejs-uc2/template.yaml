@@ -1,0 +1,36 @@
+version: 1
+type: pipeline-template
+name: "[UC-2] Vue.js App Multibranch Pipeline"
+templateType: MULTIBRANCH
+description: Build, Test and Push Image for Standard Vue.js Applications. 
+parameters:
+  - name: repoOwner
+    type: string
+    displayName: Repository Owner
+  - name: repository
+    type: string
+    displayName: repository
+  - name: githubCredentialId
+    displayName: GitHub Credential ID
+    type: CREDENTIALS
+  - name: gcpProject
+    type: string
+    displayName: GCP Project
+    defaultValue: core-flow-research
+  - name: targetReleaseName
+    type: string
+    displayName: Target CD Release Name
+  - name: targetCDProject
+    type: string
+    displayName: Target CD Project
+  - name: targetCDConfiguration
+    type: string
+    displayName: Target CD Configuration
+    default: CD
+multibranch:
+  branchSource:
+    github:
+      id: VueJS
+      credentialsId: ${githubCredentialId}
+      repoOwner: ${repoOwner}
+      repository: ${repository}
