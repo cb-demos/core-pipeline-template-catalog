@@ -42,7 +42,7 @@ pipeline {
                   script{
                     scannerHome = tool 'SonarScanner';
                   }
-                    withSonarQubeEnv('fid-sonar') {
+                    withSonarQubeEnv('stubs-sonar') {
                       // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=$sonarProject -Dsonar.host.url=https://sonar.fidelity-sda.cb-demos.io -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
                     }
