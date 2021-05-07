@@ -45,7 +45,27 @@ pipeline {
           echo "${JOB_NAME} pipeline job is awaiting approval at: ${RUN_DISPLAY_URL}"
         }
       }
-    }  
+    }
+    stage("Trigger CD release") {
+        agent any
+        steps {
+            script {
+                node() {
+                    checkout scm
+                    env.VERSION = readFile 'version.txt'
+                    env.VERSION = env.VERSION.trim()
+                    imageTag = env.VERSION
+                    if(env.BRANCH_NAME == 'master'){
+                      cloudBeesFlowTriggerRelease configuration: 'SDA-RO', parameters: '{"release":{"releaseName":"The Release","stages":[{"stageName":"Pre-Prod","stageValue":""},{"stageName":"Prod","stageValue":""},{"stageName":"Quality Assurance (QA)","stageValue":""},{"stageName":"Release Readiness","stageValue":""}],"pipelineName":"GA-Fullstack-blog","parameters":[{"parameterName":"FE-Build-number","parameterValue":""},{"parameterName":"BE-Build-number","parameterValue":""},{"parameterName":"microblog-backend_version","parameterValue":"1.0.2"},{"parameterName":"microblog-frontend_version","parameterValue":'+ imageTag +'},{"parameterName":"microblog-db_version","parameterValue":"12.1-alpine"}]}}', projectName: 'Blog', releaseName: 'The Release', startingStage: 'Release Readiness'
+                    }
+                    if(env.BRANCH_NAME != 'master'){
+                      cloudBeesFlowRunPipeline parameters: '{"pipeline":{"pipelineName":"Backend", "parameters":[]}}', projectName: 'Blog', pipelineName: 'Backend', configuration: 'SDA-RO'
+                    }
+
+                }
+            }
+        }
+    }
   }
 }
 
