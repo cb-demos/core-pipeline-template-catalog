@@ -10,7 +10,7 @@ pipeline {
   environment {
     repoOwner = "${repoOwner}"
     credId = "${githubCredentialId}"
-    sonarOrg = "cb-fidelity-sandbox"
+    sonarOrg = "cb-stubs-sandbox"
     sonarProject = "microblog-js"
   }
   stages('VueJS Test and Build')
