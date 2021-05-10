@@ -68,10 +68,10 @@ pipeline {
                     env.VERSION = readFile 'version.txt'
                     env.VERSION = env.VERSION.trim()
                     imageTag = env.VERSION
-                    if(env.BRANCH_NAME == 'master'){
+                    if(env.BRANCH_NAME == 'main'){
                       cloudBeesFlowTriggerRelease configuration: 'SDA-RO', parameters: '{"release":{"releaseName":"The Release","stages":[{"stageName":"Pre-Prod","stageValue":""},{"stageName":"Prod","stageValue":""},{"stageName":"Quality Assurance (QA)","stageValue":""},{"stageName":"Release Readiness","stageValue":""}],"pipelineName":"GA-Fullstack-blog","parameters":[{"parameterName":"FE-Build-number","parameterValue":""},{"parameterName":"BE-Build-number","parameterValue":""},{"parameterName":"microblog-backend_version","parameterValue":"1.0.2"},{"parameterName":"microblog-frontend_version","parameterValue":'+ imageTag +'},{"parameterName":"microblog-db_version","parameterValue":"12.1-alpine"}]}}', projectName: 'Blog', releaseName: 'The Release', startingStage: 'Release Readiness'
                     }
-                    if(env.BRANCH_NAME != 'master'){
+                    if(env.BRANCH_NAME != 'main'){
                       cloudBeesFlowRunPipeline parameters: '{"pipeline":{"pipelineName":"Frontend", "parameters":[]}}', projectName: 'Blog', pipelineName: 'Frontend', configuration: 'SDA-RO'
                     }
 
